@@ -1,0 +1,50 @@
+#include <mega32.h>
+#include <delay.h>
+#include <alcd.h>
+
+void main(void)
+{
+    // ---------------------------
+    // Port Initialization
+    // ---------------------------
+    DDRC = (1<<DDC0) | (1<<DDC2) | (1<<DDC4) | (1<<DDC5) | (1<<DDC6) | (1<<DDC7);
+    PORTC = 0x00;  // All low
+
+    // ---------------------------
+    // Variable Declarations (must be at top)
+    // ---------------------------
+    char message[] = "Hello";
+    char message2[] = "ATmega32 LCD";
+    int i;
+
+    // ---------------------------
+    // LCD Initialization
+    // ---------------------------
+    lcd_init(16);   // 16 characters per line
+    lcd_clear();    // Clear LCD screen
+
+    // ---------------------------
+    // Display first message
+    // ---------------------------
+    lcd_gotoxy(0,0); // First row
+    for(i=0; message[i] != '\0'; i++)
+    {
+        lcd_putchar(message[i]);
+        delay_ms(1000);  // 1 second delay
+    }
+
+    // ---------------------------
+    // Display second message
+    // ---------------------------
+    lcd_gotoxy(0,1); // Second row
+    for(i=0; message2[i] != '\0'; i++)
+    {
+        lcd_putchar(message2[i]);
+        delay_ms(1000);
+    }
+
+    // ---------------------------
+    // Infinite loop
+    // ---------------------------
+    while(1) {}
+}
